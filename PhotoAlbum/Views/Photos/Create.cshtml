@@ -1,0 +1,64 @@
+﻿﻿@model PhotoAlbum.Models.Photo
+@{
+    ViewBag.Title = "Create";
+}
+
+
+
+
+@using (Html.BeginForm("Create", "Photos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h2>Upload A Photo</h2>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserFileName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.UserFileName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserFileName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-offset-8">
+
+            <div>
+                <p class="createDropDown">
+                    <span> the photo to an album:</span>
+
+                    @Html.DropDownListFor(model => model.AlbumId, new SelectList(ViewBag.Albums, "Id", "Title"), new { @class = "control-label", id = "pCreateDrop" })
+                    @Html.ValidationMessageFor(model => model.Album, "", new { @class = "text-danger" })
+
+                    <span >@Html.ActionLink("or create a new album", "Create", "Albums")</span>
+                </p>
+            </div>
+        </div>
+        
+        <div class="createDropDown col-md-offset-1" style="display:inline-flex;">
+            <label for="file" class="btn">Select a file:</label>
+            <input class="form-control" name="UserPhoto" type="file" id="file" />
+
+
+            <div class="col-md-4">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to All Photos", "Index")
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    
+    <script type="text/javascript">
+        
+    </script>
+    
+}
